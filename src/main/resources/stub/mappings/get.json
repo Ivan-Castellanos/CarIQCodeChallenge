@@ -1,0 +1,13 @@
+{
+  "request": {
+    "url": "/pet/findByStatus?status=sold",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "[{\"id\":23688827,\"category\":{\"id\":38199557,\"name\":\"officia in\"},\"name\":\"doggie\",\"photoUrls\":[\"culpa aliqua do Ut\",\"pariatur non qui\"],\"tags\":[{\"id\":-59409203,\"name\":\"irure id dolor D\"},{\"id\":-8983193,\"name\":\"amet Duis\"}],\"status\":\"sold\"},{\"id\":249143280,\"category\":{\"id\":-29245128,\"name\":\"incididunt\"},\"name\":\"executing_from_test\",\"photoUrls\":[\"dolore Excepteur est\",\"consequat in labore\"],\"tags\":[{\"id\":-55902183,\"name\":\"Lorem laboris nulla\"},{\"id\":67424482,\"name\":\"incididunt ipsum eiusmod\"}],\"status\":\"sold\"}]"
+  }
+}
