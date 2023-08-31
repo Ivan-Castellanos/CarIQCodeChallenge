@@ -11,6 +11,11 @@ git clone git@github.com:Ivan-Castellanos/CarIQCodeChallenge.git
 
 ## Usage example
 
+First build the gradle dependencies of the project:
+```sh
+./gradlew dependencies
+```
+
 To execute Dockerized WireMock run this command on the root folder of the project:
 ```sh
 docker run -it --rm \
