@@ -94,7 +94,7 @@ public class PetsSuite {
     public void setUp() throws IOException {
         client = new OkHttpClient();
         utils = new TestUtils();
-        jsonSchemaDirectory = new File(Paths.get("src/test/resources/response-schema.json").toUri());
+        jsonSchemaDirectory = new File("./src/test/resources/response-schema.json");
         mapper = new ObjectMapper();
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V4);
         JsonNode schema = mapper.readTree(jsonSchemaDirectory);
