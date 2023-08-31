@@ -6,7 +6,7 @@ certain parameters.
 ## Installation
 
 ```sh
-git clone 
+git clone git@github.com:Ivan-Castellanos/CarIQCodeChallenge.git
 ```
 
 ## Usage example
