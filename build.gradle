@@ -21,6 +21,6 @@ dependencies {
 
 test {
     useTestNG() { //Tells Gradle to use TestNG
-        useDefaultListeners = true // Tells TestNG to execute its default reporting structure
+        suites 'testng.xml'  // Tells TestNG to execute its default reporting structure
     }
 }

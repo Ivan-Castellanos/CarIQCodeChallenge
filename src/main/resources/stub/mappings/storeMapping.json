@@ -1,0 +1,13 @@
+{
+  "request": {
+    "url": "/store/order/1",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "{\"id\":1,\"petId\":1,\"quantity\":1,\"shipDate\":\"2023-09-10T03:13:58.330Z\",\"status\":\"placed\",\"complete\":true}"
+  }
+}

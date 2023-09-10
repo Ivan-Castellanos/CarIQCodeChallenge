@@ -1,4 +1,4 @@
-package org.cariq.dao;
+package org.cariq.dto.pet;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
