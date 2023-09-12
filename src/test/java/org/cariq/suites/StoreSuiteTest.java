@@ -18,7 +18,6 @@ public class StoreSuiteTest extends BaseTest {
 
     @Test
     public void getStoreByID(/*String directory*/) throws IOException {
-        System.out.println(Thread.currentThread().getName());
         SoftAssert softAssert = new SoftAssert();
         APIStore apiStore = new APIStore("order/1");
 

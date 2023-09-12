@@ -25,11 +25,7 @@ public class PetsSuiteTest extends BaseTest {
     private OkHttpClient client;
     private ObjectMapper mapper;
 
-    @Test(
-            dataProvider = "postPetData",
-            dataProviderClass = DataProviders.class,
-            groups = "smoke"
-    )
+    @Test(dataProvider = "postPetData", dataProviderClass = DataProviders.class, groups = "smoke")
     public void postPet(String body, int code, String schemaDirectory) throws IOException {
         SoftAssert softAssert = new SoftAssert();
         APIPets apiPets = new APIPets();
@@ -43,11 +39,15 @@ public class PetsSuiteTest extends BaseTest {
     @Test(dataProvider = "putPetData", dataProviderClass = DataProviders.class, groups = "regression")
     public void putPet(String body, int code, String schemaDirectory) throws IOException {
         SoftAssert softAssert = new SoftAssert();
-        APIPets apiPets = new APIPets();
+        APIPets apiPets = new APIPets("9222968140497181000");
+
 
         Response response = client.newCall(apiPets.put(body)).execute();
+        String responseBody = response.body().string();
+        Pet pet = mapper.readValue(responseBody, Pet.class);
 
-        commonAssertWithBody(response,softAssert,code, schemaDirectory);
+        commonAssertWithBody(response,softAssert,code, schemaDirectory,responseBody);
+        Assert.assertEquals(pet.getName(), "Max");
         softAssert.assertAll();
     }
 
@@ -75,7 +75,7 @@ public class PetsSuiteTest extends BaseTest {
         commonAssertWithBody(response,softAssert,201,"./src/test/resources/response-schema.json", body);
         softAssert.assertAll();
         Assert.assertTrue(pet.getId()>0);
-        System.out.println(pet.getId());
+
         // -----------------------------
         softAssert = new SoftAssert();
         apiPets = new APIPets(String.valueOf(pet.getId()));
@@ -93,8 +93,7 @@ public class PetsSuiteTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @BeforeTest(groups = {"smoke", "regression"
-    })
+    @BeforeTest(groups = {"smoke", "regression"})
     public void testSetUp() {
         client = new OkHttpClient();
         mapper = new ObjectMapper();
