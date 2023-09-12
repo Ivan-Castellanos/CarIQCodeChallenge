@@ -82,7 +82,7 @@ public class PetsSuiteTest extends BaseTest {
 
         // -----------------------------
         softAssert = new SoftAssert();
-        apiPets = new APIPets("9222968140497181000");
+        apiPets = new APIPets(String.valueOf(pet.getId()));
 
         response = client.newCall(apiPets.delete()).execute();
         commonAssert(response, softAssert, 204);
