@@ -1,25 +1,21 @@
 package org.cariq.suites;
 
-import com.beust.ah.A;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.networknt.schema.JsonSchema;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.cariq.APIPets;
 import org.cariq.BaseTest;
-import org.cariq.TestUtils;
 import org.cariq.dp.DataProviders;
 import org.cariq.dto.pet.Pet;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import static org.cariq.TestUtils.*;
 
-
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+
+import static org.cariq.TestUtils.*;
 
 public class PetsSuiteTest extends BaseTest {
     private OkHttpClient client;
@@ -32,21 +28,21 @@ public class PetsSuiteTest extends BaseTest {
 
         Response response = client.newCall(apiPets.post(body)).execute();
 
-        commonAssertWithBody(response,softAssert,code,schemaDirectory);
+        commonAssertWithBody(response, softAssert, code, schemaDirectory);
         softAssert.assertAll();
     }
 
     @Test(dataProvider = "putPetData", dataProviderClass = DataProviders.class, groups = "regression")
-    public void putPet(String body, int code, String schemaDirectory) throws IOException {
+    public void putPet(String body, int code, String schemaDirectory, String id) throws IOException {
         SoftAssert softAssert = new SoftAssert();
-        APIPets apiPets = new APIPets("9222968140497181000");
+        APIPets apiPets = new APIPets(id);
 
 
         Response response = client.newCall(apiPets.put(body)).execute();
         String responseBody = response.body().string();
         Pet pet = mapper.readValue(responseBody, Pet.class);
 
-        commonAssertWithBody(response,softAssert,code, schemaDirectory,responseBody);
+        commonAssertWithBody(response, softAssert, code, schemaDirectory, responseBody);
         Assert.assertEquals(pet.getName(), "Max");
         softAssert.assertAll();
     }
@@ -72,16 +68,16 @@ public class PetsSuiteTest extends BaseTest {
         Response response = client.newCall(apiPets.post(dataFetcher("pets/BasePet"))).execute();
         String body = new String(response.body().string());
         Pet pet = mapper.readValue(body, Pet.class);
-        commonAssertWithBody(response,softAssert,201,"./src/test/resources/response-schema.json", body);
+        commonAssertWithBody(response, softAssert, 201, "./src/test/resources/response-schema.json", body);
         softAssert.assertAll();
-        Assert.assertTrue(pet.getId()>0);
+        Assert.assertTrue(pet.getId() > 0);
 
         // -----------------------------
         softAssert = new SoftAssert();
         apiPets = new APIPets(String.valueOf(pet.getId()));
 
         response = client.newCall(apiPets.get()).execute();
-        commonAssert(response,softAssert,200);
+        commonAssert(response, softAssert, 200);
         softAssert.assertAll();
 
         // -----------------------------
@@ -89,7 +85,7 @@ public class PetsSuiteTest extends BaseTest {
         apiPets = new APIPets("9222968140497181000");
 
         response = client.newCall(apiPets.delete()).execute();
-        commonAssert(response,softAssert,204);
+        commonAssert(response, softAssert, 204);
         softAssert.assertAll();
     }
 

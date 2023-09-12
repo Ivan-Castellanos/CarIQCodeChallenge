@@ -45,7 +45,7 @@ public class TestUtils {
         JsonNode schema = mapper.readTree(jsonSchemaDirectory);
         JsonSchema jsonSchema = factory.getSchema(schema);
 
-        commonAssert(response,softAssert,code);
+        commonAssert(response, softAssert, code);
 
         JsonNode jsonNode = mapper.readTree(response.body().string());
         Set<ValidationMessage> errors = jsonSchema.validate(jsonNode);
@@ -59,7 +59,7 @@ public class TestUtils {
         JsonNode schema = mapper.readTree(jsonSchemaDirectory);
         JsonSchema jsonSchema = factory.getSchema(schema);
 
-        commonAssert(response,softAssert,code);
+        commonAssert(response, softAssert, code);
 
         JsonNode jsonNode = mapper.readTree(body);
         Set<ValidationMessage> errors = jsonSchema.validate(jsonNode);

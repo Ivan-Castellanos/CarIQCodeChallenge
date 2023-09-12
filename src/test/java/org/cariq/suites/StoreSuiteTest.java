@@ -5,13 +5,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import org.cariq.APIStore;
 import org.cariq.BaseTest;
-import org.cariq.TestUtils;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import static org.cariq.TestUtils.*;
 
 import java.io.IOException;
+
+import static org.cariq.TestUtils.commonAssert;
 
 public class StoreSuiteTest extends BaseTest {
     private OkHttpClient client;
