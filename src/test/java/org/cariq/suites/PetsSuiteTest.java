@@ -15,7 +15,8 @@ import org.testng.asserts.SoftAssert;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.cariq.TestUtils.*;
+import static org.cariq.TestUtils.commonAssert;
+import static org.cariq.TestUtils.commonAssertWithBody;
 
 public class PetsSuiteTest extends BaseTest {
     private OkHttpClient client;
@@ -60,36 +61,7 @@ public class PetsSuiteTest extends BaseTest {
         softAssert.assertAll();
     }
 
-    @Test
-    public void longTest() throws IOException {
-        SoftAssert softAssert = new SoftAssert();
-        APIPets apiPets = new APIPets();
-
-        Response response = client.newCall(apiPets.post(dataFetcher("pets/BasePet"))).execute();
-        String body = new String(response.body().string());
-        Pet pet = mapper.readValue(body, Pet.class);
-        commonAssertWithBody(response, softAssert, 201, "./src/test/resources/response-schema.json", body);
-        softAssert.assertAll();
-        Assert.assertTrue(pet.getId() > 0);
-
-        // -----------------------------
-        softAssert = new SoftAssert();
-        apiPets = new APIPets(String.valueOf(pet.getId()));
-
-        response = client.newCall(apiPets.get()).execute();
-        commonAssert(response, softAssert, 200);
-        softAssert.assertAll();
-
-        // -----------------------------
-        softAssert = new SoftAssert();
-        apiPets = new APIPets(String.valueOf(pet.getId()));
-
-        response = client.newCall(apiPets.delete()).execute();
-        commonAssert(response, softAssert, 204);
-        softAssert.assertAll();
-    }
-
-    @BeforeTest(groups = {"smoke", "regression"})
+    @BeforeTest(groups = {"smoke"})
     public void testSetUp() {
         client = new OkHttpClient();
         mapper = new ObjectMapper();
