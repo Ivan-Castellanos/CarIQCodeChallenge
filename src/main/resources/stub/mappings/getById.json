@@ -1,7 +1,7 @@
 {
   "request": {
     "url": "/pet/9222968140497181000",
-    "method": "PUT"
+    "method": "GET"
   },
   "response": {
     "status": 200,

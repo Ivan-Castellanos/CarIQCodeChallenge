@@ -1,0 +1,13 @@
+{
+  "request": {
+    "url": "/pet/9222968140497181000",
+    "method": "DELETE"
+  },
+  "response": {
+    "status": 204,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "body": "[]"
+  }
+}
