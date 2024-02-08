@@ -15,8 +15,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.cariq.TestUtils.commonAssert;
-import static org.cariq.TestUtils.commonAssertWithBody;
+import static org.cariq.TestUtils.*;
 
 public class PetsSuiteTest extends BaseTest {
     private OkHttpClient client;
@@ -58,6 +57,43 @@ public class PetsSuiteTest extends BaseTest {
 
         commonAssert(response, softAssert, code);
         softAssert.assertTrue(apiPets.arePetsSold(pets));
+        softAssert.assertAll();
+    }
+    @Test
+    public void wrongNameTest() throws IOException {
+        SoftAssert softAssert = new SoftAssert();
+        APIPets apiPets = new APIPets();
+
+        Response response = client.newCall(apiPets.post(dataFetcher("pets/BasePet"))).execute();
+        String responseBody = response.body().string();
+        Pet pet = mapper.readValue(responseBody, Pet.class);
+
+        commonAssertWithBody(response, softAssert,201,"./src/test/resources/response-schema.json", responseBody);
+        Assert.assertEquals(pet.getName(), "doggie");
+        softAssert.assertAll();
+
+        //---------------------
+        softAssert = new SoftAssert();
+        apiPets = new APIPets(String.valueOf(pet.getId()));
+
+        response = client.newCall(apiPets.put(dataFetcher("pets/BasePet"))).execute();
+        responseBody = response.body().string();
+        pet = mapper.readValue(responseBody, Pet.class);
+
+        commonAssertWithBody(response,softAssert, 200, "./src/test/resources/response-schema.json", responseBody);
+        Assert.assertEquals(pet.getName(),"Max");
+        softAssert.assertAll();
+
+        //-----------------
+        softAssert = new SoftAssert();
+        apiPets = new APIPets(String.valueOf(pet.getId()));
+
+        response = client.newCall(apiPets.get()).execute();
+        responseBody = response.body().string();
+        pet = mapper.readValue(responseBody, Pet.class);
+
+        commonAssertWithBody(response, softAssert, 200, "./src/test/resources/response-schema.json", responseBody);
+        Assert.assertEquals(pet.getName(),"Max");
         softAssert.assertAll();
     }
 
